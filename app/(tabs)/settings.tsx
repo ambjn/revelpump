@@ -1,4 +1,4 @@
-import { View, Text, TouchableOpacity, Image, ScrollView, Alert } from 'react-native';
+import { View, Text, TouchableOpacity, Image, Alert } from 'react-native';
 import React from 'react';
 import { useAuth, useUser } from '@clerk/clerk-expo';
 import { useRouter } from 'expo-router';
@@ -27,21 +27,18 @@ const Settings = () => {
   };
 
   return (
-    <ScrollView className="flex-1 bg-gray-50">
-      {/* Header */}
+    <View className="flex-1 bg-gray-50">
       <View className="border-b border-gray-200 bg-white px-5 pb-4 pt-16">
         <Text className="text-4xl text-gray-900" style={{ fontFamily: 'ElmsSans-SemiBold' }}>
           Settings⚙️
         </Text>
-        <Text className="mt-2 text-2xl text-gray-500" style={{ fontFamily: 'ElmsSans-Regular' }}>
+        <Text className="mt-2 text-2xl text-gray-500" style={{ fontFamily: 'ElmsSans-SemiBold' }}>
           Manage your RevelPump⛽️ account
         </Text>
       </View>
 
-      {/* Profile Section */}
       <View className="mx-5 mt-6 rounded-2xl border border-gray-100 bg-white p-6 shadow-sm">
         <View className="items-center">
-          {/* Profile Picture */}
           {user?.imageUrl ? (
             <Image
               source={{ uri: user.imageUrl }}
@@ -49,31 +46,23 @@ const Settings = () => {
               resizeMode="cover"
             />
           ) : (
-            <View className="h-24 w-24 items-center justify-center rounded-full border-4 border-blue-500 bg-gradient-to-br from-blue-400 to-purple-500">
-              <Text
-                className="text-4xl font-bold text-white"
-                style={{ fontFamily: 'ElmsSans-Regular' }}>
-                {user?.firstName?.charAt(0) ||
-                  user?.emailAddresses[0]?.emailAddress.charAt(0).toUpperCase()}
-              </Text>
+            <View className="h-24 w-24 items-center justify-center rounded-full border-4 border-blue-500 bg-gray-200">
+              <Ionicons name="person" size={48} color="#6b7280" />
             </View>
           )}
 
-          {/* Name */}
           <Text
             className="mt-4 text-3xl font-bold text-gray-900"
             style={{ fontFamily: 'ElmsSans-SemiBold' }}>
             {user?.fullName || 'User'}
           </Text>
 
-          {/* Email */}
           <Text className="mt-1 text-lg text-gray-500" style={{ fontFamily: 'ElmsSans-Regular' }}>
             {user?.primaryEmailAddress?.emailAddress}
           </Text>
         </View>
       </View>
 
-      {/* Account Details */}
       <View className="mx-5 mt-6">
         <Text
           className="mb-3 text-base font-semibold uppercase text-gray-500"
@@ -82,7 +71,6 @@ const Settings = () => {
         </Text>
 
         <View className="rounded-2xl border border-gray-100 bg-white shadow-sm">
-          {/* User ID */}
           <View className="flex-row items-center justify-between border-b border-gray-100 px-4 py-5">
             <View className="flex-row items-center">
               <Ionicons name="person-outline" size={24} color="#6b7280" />
@@ -93,11 +81,10 @@ const Settings = () => {
               </Text>
             </View>
             <Text className="text-base text-gray-500" style={{ fontFamily: 'ElmsSans-Regular' }}>
-              {user?.id.substring(0, 8)}...
+              {user?.id.substring(0, 15)}...
             </Text>
           </View>
 
-          {/* Created At */}
           <View className="flex-row items-center justify-between px-4 py-5">
             <View className="flex-row items-center">
               <Ionicons name="calendar-outline" size={24} color="#6b7280" />
@@ -114,7 +101,6 @@ const Settings = () => {
         </View>
       </View>
 
-      {/* Sign Out Button */}
       <View className="mx-5 mb-8 mt-6">
         <TouchableOpacity
           onPress={handleSignOut}
@@ -129,7 +115,7 @@ const Settings = () => {
           </View>
         </TouchableOpacity>
       </View>
-    </ScrollView>
+    </View>
   );
 };
 
