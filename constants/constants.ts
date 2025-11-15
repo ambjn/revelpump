@@ -1,0 +1,1 @@
+export const wssUrl: string = 'wss://pumpportal.fun/api/data'
