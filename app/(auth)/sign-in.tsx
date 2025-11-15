@@ -45,7 +45,7 @@ export default function Page() {
       resizeMode="cover">
       <SafeAreaView className="flex-1 bg-gray-800/40">
         <View className="mt-25 flex-1 justify-between px-6">
-          <Text className="text-6xl text-white/50" style={{ fontFamily: 'ElmsSans-Bold' }}>
+          <Text className="text-6xl text-white/90" style={{ fontFamily: 'ElmsSans-Bold' }}>
             Welcome⛽️
           </Text>
 
