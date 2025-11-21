@@ -1,16 +1,8 @@
-import {
-  View,
-  Text,
-  Image,
-  ActivityIndicator,
-  TouchableOpacity,
-  Modal,
-  ScrollView,
-} from 'react-native';
+import { View, Text, Image, ActivityIndicator, TouchableOpacity } from 'react-native';
 import React, { useEffect, useRef, useState } from 'react';
 import { FlashList } from '@shopify/flash-list';
 import { wssUrl } from '@/constants/constants';
-import { Ionicons } from '@expo/vector-icons';
+import TokenDetailModal from '@/components/TokenDetailModal';
 
 interface TokenMetadata {
   createdOn?: string;
@@ -190,7 +182,7 @@ const Home = () => {
     <View className="flex-1 bg-gray-50">
       <View className="border-b border-gray-200 bg-white px-5 pb-4 pt-16">
         <Text className="text-5xl text-gray-900" style={{ fontFamily: 'ElmsSans-SemiBold' }}>
-          {'RevelPump\nLive'}
+          {'RevelPump\nLive⛽️'}
         </Text>
         <Text className="mt-2 text-xl text-gray-500" style={{ fontFamily: 'ElmsSans-Regular' }}>
           realtime token events • {events.length} events 🚀
@@ -212,196 +204,11 @@ const Home = () => {
         )}
       </View>
 
-      <Modal
+      <TokenDetailModal
         visible={modalVisible}
-        animationType="slide"
-        presentationStyle="pageSheet"
-        onRequestClose={() => setModalVisible(false)}>
-        <View className="flex-1 bg-white">
-          {selectedToken && (
-            <ScrollView className="flex-1">
-              <View className="flex-row justify-end px-5 pt-12">
-                <TouchableOpacity
-                  onPress={() => setModalVisible(false)}
-                  className="rounded-full bg-gray-100 p-3">
-                  <Ionicons name="close" size={28} color="#374151" />
-                </TouchableOpacity>
-              </View>
-
-              <View className="items-center px-5 pt-4">
-                {selectedToken.metadata?.image ? (
-                  <Image
-                    source={{ uri: selectedToken.metadata.image }}
-                    className="h-80 w-80 rounded-3xl border-4 border-gray-200"
-                    resizeMode="cover"
-                  />
-                ) : (
-                  <View className="h-80 w-80 items-center justify-center rounded-3xl bg-gradient-to-br from-blue-400 to-purple-500">
-                    <Text
-                      className="text-8xl font-bold text-white"
-                      style={{ fontFamily: 'ElmsSans-Bold' }}>
-                      {selectedToken.symbol.substring(0, 2).toUpperCase()}
-                    </Text>
-                  </View>
-                )}
-              </View>
-
-              <View className="px-5 pt-6">
-                <Text
-                  className="text-4xl font-bold text-gray-900"
-                  style={{ fontFamily: 'ElmsSans-Bold' }}>
-                  {selectedToken.name}
-                </Text>
-                <Text
-                  className="mt-2 text-2xl text-gray-500"
-                  style={{ fontFamily: 'ElmsSans-Regular' }}>
-                  ${selectedToken.symbol}
-                </Text>
-
-                {selectedToken.metadata?.description && (
-                  <View className="mt-4">
-                    <Text
-                      className="text-lg text-gray-700"
-                      style={{ fontFamily: 'ElmsSans-Regular' }}>
-                      {selectedToken.metadata.description}
-                    </Text>
-                  </View>
-                )}
-
-                <View className="mt-6 rounded-2xl bg-gray-50 p-5">
-                  <Text
-                    className="mb-4 text-xl font-semibold text-gray-900"
-                    style={{ fontFamily: 'ElmsSans-SemiBold' }}>
-                    Token Stats
-                  </Text>
-
-                  <View className="mb-4">
-                    <Text
-                      className="mb-1 text-base text-gray-500"
-                      style={{ fontFamily: 'ElmsSans-Regular' }}>
-                      Market Cap (SOL)
-                    </Text>
-                    <Text
-                      className="text-2xl font-bold text-gray-900"
-                      style={{ fontFamily: 'ElmsSans-Bold' }}>
-                      {selectedToken.marketCapSol?.toFixed(2) ?? 'N/A'}
-                    </Text>
-                  </View>
-
-                  <View className="mb-4">
-                    <Text
-                      className="mb-1 text-base text-gray-500"
-                      style={{ fontFamily: 'ElmsSans-Regular' }}>
-                      SOL Amount
-                    </Text>
-                    <Text
-                      className="text-2xl font-bold text-gray-900"
-                      style={{ fontFamily: 'ElmsSans-Bold' }}>
-                      {selectedToken.solAmount?.toFixed(4) ?? 'N/A'}
-                    </Text>
-                  </View>
-
-                  <View className="mb-4">
-                    <Text
-                      className="mb-1 text-base text-gray-500"
-                      style={{ fontFamily: 'ElmsSans-Regular' }}>
-                      Initial Buy
-                    </Text>
-                    <Text
-                      className="text-2xl font-bold text-gray-900"
-                      style={{ fontFamily: 'ElmsSans-Bold' }}>
-                      {selectedToken.initialBuy?.toLocaleString() ?? 'N/A'}
-                    </Text>
-                  </View>
-
-                  <View>
-                    <Text
-                      className="mb-1 text-base text-gray-500"
-                      style={{ fontFamily: 'ElmsSans-Regular' }}>
-                      Pool
-                    </Text>
-                    <Text
-                      className="text-2xl font-bold uppercase text-gray-900"
-                      style={{ fontFamily: 'ElmsSans-Bold' }}>
-                      {selectedToken.pool ?? 'N/A'}
-                    </Text>
-                  </View>
-                </View>
-
-                <View className="mt-6 rounded-2xl bg-gray-50 p-5">
-                  <Text
-                    className="mb-4 text-xl font-semibold text-gray-900"
-                    style={{ fontFamily: 'ElmsSans-SemiBold' }}>
-                    Bonding Curve
-                  </Text>
-
-                  <View className="mb-4">
-                    <Text
-                      className="mb-1 text-base text-gray-500"
-                      style={{ fontFamily: 'ElmsSans-Regular' }}>
-                      vSOL in Curve
-                    </Text>
-                    <Text
-                      className="text-2xl font-bold text-gray-900"
-                      style={{ fontFamily: 'ElmsSans-Bold' }}>
-                      {selectedToken.vSolInBondingCurve?.toFixed(2) ?? 'N/A'} SOL
-                    </Text>
-                  </View>
-
-                  <View>
-                    <Text
-                      className="mb-1 text-base text-gray-500"
-                      style={{ fontFamily: 'ElmsSans-Regular' }}>
-                      vTokens in Curve
-                    </Text>
-                    <Text
-                      className="text-2xl font-bold text-gray-900"
-                      style={{ fontFamily: 'ElmsSans-Bold' }}>
-                      {selectedToken.vTokensInBondingCurve?.toLocaleString() ?? 'N/A'}
-                    </Text>
-                  </View>
-                </View>
-
-                <View className="mb-8 mt-6 rounded-2xl bg-gray-50 p-5">
-                  <Text
-                    className="mb-4 text-xl font-semibold text-gray-900"
-                    style={{ fontFamily: 'ElmsSans-SemiBold' }}>
-                    Contract Details
-                  </Text>
-
-                  <View className="mb-4">
-                    <Text
-                      className="mb-2 text-base text-gray-500"
-                      style={{ fontFamily: 'ElmsSans-Regular' }}>
-                      Mint Address
-                    </Text>
-                    <Text
-                      className="text-base text-gray-700"
-                      style={{ fontFamily: 'ElmsSans-Regular' }}>
-                      {selectedToken.mint}
-                    </Text>
-                  </View>
-
-                  {selectedToken.traderPublicKey && (
-                    <View>
-                      <Text
-                        className="mb-2 text-base text-gray-500"
-                        style={{ fontFamily: 'ElmsSans-Regular' }}>
-                        Trader Address
-                      </Text>
-                      <Text
-                        className="text-base text-gray-700"
-                        style={{ fontFamily: 'ElmsSans-Regular' }}>
-                        {selectedToken.traderPublicKey}
-                      </Text>
-                    </View>
-                  )}
-                </View>
-              </View>
-            </ScrollView>
-          )}
-        </View>
-      </Modal>
+        token={selectedToken}
+        onClose={() => setModalVisible(false)}
+      />
     </View>
   );
 };
